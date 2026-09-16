@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flip Cards</title>
+<style>
+  :root{
+    --paper: #ede7d9;
+    --paper-back: #d8cdb0;
+    --ink: #2b2b28;
+    --rule: #b9ac8a;
+    --accent: #7a3b2e;
+  }
+
+  * { box-sizing: border-box; }
+
+  body{
+    margin: 0;
+    min-height: 100vh;
+    background: #3f3b34;
+    background-image:
+      radial-gradient(circle at 20% 20%, rgba(255,255,255,0.03), transparent 40%),
+      radial-gradient(circle at 80% 60%, rgba(255,255,255,0.03), transparent 40%);
+    font-family: 'Courier New', Courier, monospace;
+    color: var(--ink);
+    padding: 48px 24px 80px;
+  }
+
+  h1{
+    text-align: center;
+    color: var(--paper);
+    font-size: 1.6rem;
+    letter-spacing: 0.02em;
+    font-weight: 700;
+    margin: 0 0 4px;
+  }
+
+  p.sub{
+    text-align: center;
+    color: #b8b2a2;
+    margin: 0 0 40px;
+    font-size: 0.95rem;
+  }
+
+  .grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 28px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .card{
+    perspective: 1200px;
+    height: 220px;
+  }
+
+  .card-inner{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s cubic-bezier(.2,.8,.2,1);
+    transform-style: preserve-3d;
+    cursor: pointer;
+  }
+
+  .card.flipped .card-inner{
+    transform: rotateY(180deg);
+  }
+
+  .card-face{
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 22px;
+    border-radius: 3px;
+    backface-visibility: hidden;
+    background: var(--paper);
+    box-shadow: 0 1px 0 var(--rule) inset, 0 6px 14px rgba(0,0,0,0.35);
+    line-height: 1.4;
+  }
+
+  .card-face::before{
+    content: "";
+    position: absolute;
+    top: 14px; left: 14px; right: 14px;
+    height: 1px;
+    background: var(--rule);
+    opacity: 0.6;
+  }
+
+  .card-face.front{
+    background: var(--paper);
+  }
+
+  .card-face.back{
+    background: var(--paper-back);
+    transform: rotateY(180deg);
+  }
+
+  .label{
+    position: absolute;
+    top: 8px;
+    right: 14px;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    opacity: 0.7;
+  }
+
+  .text{
+    font-size: 1.02rem;
+    color: var(--ink);
+  }
+
+  .hint{
+    position: absolute;
+    bottom: 10px;
+    left: 14px;
+    right: 14px;
+    font-size: 0.68rem;
+    color: #8a8270;
+    text-align: right;
+  }
+</style>
+</head>
+<body>
+
+  <h1>Pop Quiz</h1>
+  <p class="sub">Click a card to flip it over</p>
+
+  <div class="grid" id="grid"></div>
+
+<script>
+  const items = [
+    { q: "What planet is known as the Red Planet?", a: "Mars" },
+    { q: "How many sides does a hexagon have?", a: "Six" },
+    { q: "What's the chemical symbol for gold?", a: "Au" },
+    { q: "Which ocean is the largest on Earth?", a: "The Pacific Ocean" },
+    { q: "Who wrote Romeo and Juliet?", a: "William Shakespeare" },
+    { q: "What year did the Berlin Wall fall?", a: "1989" }
+  ];
+
+  const grid = document.getElementById('grid');
+
+  items.forEach((item, i) => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <div class="card-inner">
+        <div class="card-face front">
+          <span class="label">Q${i + 1}</span>
+          <div class="text">${item.q}</div>
+          <span class="hint">tap to reveal</span>
+        </div>
+        <div class="card-face back">
+          <span class="label">A${i + 1}</span>
+          <div class="text">${item.a}</div>
+          <span class="hint">tap to hide</span>
+        </div>
+      </div>
+    `;
+    card.addEventListener('click', () => card.classList.toggle('flipped'));
+    grid.appendChild(card);
+  });
+</script>
+
+</body>
+</html>
