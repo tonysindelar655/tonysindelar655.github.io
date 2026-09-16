@@ -129,19 +129,20 @@
 </head>
 <body>
 
-  <h1>Pop Quiz</h1>
+  <h1>Address misconceptions
+</h1>
   <p class="sub">Click a card to flip it over</p>
 
   <div class="grid" id="grid"></div>
 
 <script>
   const items = [
-    { q: "What planet is known as the Red Planet?", a: "Mars" },
-    { q: "How many sides does a hexagon have?", a: "Six" },
-    { q: "What's the chemical symbol for gold?", a: "Au" },
-    { q: "Which ocean is the largest on Earth?", a: "The Pacific Ocean" },
-    { q: "Who wrote Romeo and Juliet?", a: "William Shakespeare" },
-    { q: "What year did the Berlin Wall fall?", a: "1989" }
+    { q: "LLMs know things", a: "LLMs don't know things → they model language.
+LLMs do not store their training data or have access to it — it's not stored as part of the model. LLMs are an abstraction: a mathematical/statistical model for "how language hangs together." They have no notion of knowledge or truth, or an underlying database of "facts." Text they produce that is factual just happens to be true." },
+    { q: "LLMs are all about prompting", a: "LLMs aren't just about prompting → they're about context & tool availability.
+Your prompt is just one part of the context provided to the model. Other parts include: files you upload, tools the model can call, the entire chat thread so far, system prompts/hidden instructions, settings/preferences, and memories." },
+    { q: "LLMs are thinking", a: "LLMs aren't thinking → reasoning is added scaffolding.
+LLMs do not inherently reason — they generate one token at a time. Reasoning scaffolding creates intermediate steps the base model wouldn't produce on its own (listing constraints, breaking into sub-prompts, re-evaluating output, invoking tools). Reasoning models run multi-step workflows behind the scenes. Use a reasoning model for multi-step tasks that benefit from explicit structure." },
   ];
 
   const grid = document.getElementById('grid');
